@@ -9,7 +9,7 @@ import Button from '../button/button.component';
 import './sign-up-form.style.scss';
 
 const defaultFormFields = {
-  displayName: '',
+  userName: '',
   email: '',
   password: '',
   confirmedPassword: '',
@@ -17,9 +17,10 @@ const defaultFormFields = {
 
 const SignUpForm = () => {
   const [formfields, setFormFields] = useState(defaultFormFields);
-  const { displayName, email, password, confirmedPassword } = formfields;
+  const { userName, email, password, confirmedPassword } = formfields;
 
-  console.log(formfields);
+  // ************ useContext ************
+  // const { setCurrentUser } = useContext(UserContext);
 
   const formFieldChangeHandler = (event) => {
     const { name, value } = event.target;
@@ -44,7 +45,9 @@ const SignUpForm = () => {
         email,
         password
       );
-      await createUserDocumentFromAuth(user, { displayName });
+      await createUserDocumentFromAuth(user, { userName });
+      // ************ useContext ************
+      // setCurrentUser(user);
       resetFormFields();
     } catch (error) {
       if (error.code === 'auth/email-already-in-use') {
@@ -64,11 +67,11 @@ const SignUpForm = () => {
       <span>Sign up with your email and password</span>
       <form onSubmit={formSubmitHandler}>
         <FormInput
-          label='Display Name'
+          label='User Name'
           type='text'
           required
-          name='displayName'
-          value={displayName}
+          name='userName'
+          value={userName}
           onChange={formFieldChangeHandler}
         />
 

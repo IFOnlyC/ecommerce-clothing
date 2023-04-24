@@ -18,6 +18,9 @@ const SignInForm = () => {
   const [formfields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formfields;
 
+  // ************ useContext ************
+  // const { setCurrentUser } = useContext(UserContext);
+
   const formFieldChangeHandler = (event) => {
     const { name, value } = event.target;
     setFormFields({ ...formfields, [name]: value });
@@ -28,19 +31,17 @@ const SignInForm = () => {
   };
 
   const signInWithGoogle = async () => {
-    const { user } = await signInWithGooglePopup();
-    await createUserDocumentFromAuth(user);
+    await signInWithGooglePopup();
   };
 
   const formSubmitHandler = async (event) => {
     event.preventDefault();
 
     try {
-      const response = await signInAuthUserWithEmailAndPassword(
-        email,
-        password
-      );
-      console.log(response);
+      await signInAuthUserWithEmailAndPassword(email, password);
+      // ************ useContext ************
+      // setCurrentUser(user);
+      resetFormFields();
     } catch (error) {
       switch (error.code) {
         case 'auth/wrong-password':
@@ -80,7 +81,7 @@ const SignInForm = () => {
         <div className='buttons-container'>
           <Button type='submit'>Sign In</Button>
           <Button type='button' buttonType='google' onClick={signInWithGoogle}>
-            <i class='google-icon fa-brands fa-google fa-lg'></i> Sign In
+            Google Sign In
           </Button>
         </div>
       </form>
