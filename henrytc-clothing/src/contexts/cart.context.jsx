@@ -37,6 +37,9 @@ export const CartProvider = ({ children }) => {
   const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
+    /**
+     * array1.reduce((accumulator, currentValue) => accumulator + currentValue, initialValue);
+     */
     const newCartCount = cartItems.reduce(
       (curTotal, curCartItem) => (curTotal += curCartItem.quantity),
       0
