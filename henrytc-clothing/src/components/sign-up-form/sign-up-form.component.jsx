@@ -19,9 +19,6 @@ const SignUpForm = () => {
   const [formfields, setFormFields] = useState(defaultFormFields);
   const { userName, email, password, confirmedPassword } = formfields;
 
-  // ************ useContext ************
-  // const { setCurrentUser } = useContext(UserContext);
-
   const formFieldChangeHandler = (event) => {
     const { name, value } = event.target;
     setFormFields({ ...formfields, [name]: value });
