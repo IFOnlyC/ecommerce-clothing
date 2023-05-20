@@ -69,7 +69,10 @@ export const addCollectionAndDocuments = async (
   console.log('done');
 };
 
-export const createUserDocumentFromAuth = async (userAuth) => {
+export const createUserDocumentFromAuth = async (
+  userAuth,
+  addtionalInformation = {}
+) => {
   if (!userAuth) return;
 
   // get the reference of the document model instance
@@ -81,13 +84,18 @@ export const createUserDocumentFromAuth = async (userAuth) => {
     const { userName, email } = userAuth;
     const createdAt = new Date();
     try {
-      await setDoc(userDocRef, { userName, email, createdAt });
+      await setDoc(userDocRef, {
+        userName,
+        email,
+        createdAt,
+        ...addtionalInformation,
+      });
     } catch (error) {
       console.log('An Error happened when creating the user: ', error.message);
     }
   }
 
-  return userDocRef;
+  return userSnapshot;
 };
 
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
@@ -120,4 +128,17 @@ export const getCategoriesAndDocuments = async () => {
 
   const querySnapShot = await getDocs(qry);
   return querySnapShot.docs.map((docSnapshot) => docSnapshot.data());
+};
+
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      (userAuth) => {
+        unsubscribe();
+        resolve(userAuth);
+      },
+      reject
+    );
+  });
 };
