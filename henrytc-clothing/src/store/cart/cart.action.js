@@ -1,5 +1,5 @@
 import { CART_ACTION_TYPES } from './cart.types';
-import { createAction } from '../../utils/firebase/reducer/reducer.utils';
+import { createAction } from '../../utils/reducer/reducer.utils';
 
 /**
  * This helper function is used to find if cartItems contains the productToAdd
