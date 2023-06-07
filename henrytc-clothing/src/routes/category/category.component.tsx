@@ -12,8 +12,14 @@ import {
 
 import './category.style.scss';
 
+type CategorRouteParams = {
+  category: string;
+};
+
 const Category = () => {
-  const { category } = useParams();
+  const { category } = useParams<
+    keyof CategorRouteParams
+  >() as CategorRouteParams;
   const categoriesMap = useSelector(selectCategoriesMap);
   const categoriesIsLoading = useSelector(selectCategoriesIsLoading);
   const [products, setProducts] = useState(categoriesMap[category]);

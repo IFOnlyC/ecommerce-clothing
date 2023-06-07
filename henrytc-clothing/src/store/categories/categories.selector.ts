@@ -1,6 +1,10 @@
 import { createSelector } from 'reselect';
+import { CategoryMap } from './categories.types';
+import { CategoriesState } from './categories.reducer';
+import { RootState } from '../store';
 
-const selectCategoryReducer = (state) => state.categories;
+const selectCategoryReducer = (state: RootState): CategoriesState =>
+  state.categories;
 
 export const selectCategories = createSelector(
   [selectCategoryReducer],
@@ -9,12 +13,12 @@ export const selectCategories = createSelector(
 
 export const selectCategoriesMap = createSelector(
   [selectCategories],
-  (categories) =>
+  (categories): CategoryMap =>
     categories.reduce((accumulator, category) => {
       const { title, items } = category;
       accumulator[title.toLowerCase()] = items;
       return accumulator;
-    }, {})
+    }, {} as CategoryMap)
 );
 
 export const selectCategoriesIsLoading = createSelector(
