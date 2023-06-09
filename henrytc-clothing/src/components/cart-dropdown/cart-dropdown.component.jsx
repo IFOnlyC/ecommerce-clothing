@@ -7,11 +7,12 @@ import Button from '../button/button.component';
 import { selectCartItems } from '../../store/cart/cart.selector';
 
 import './cart-dropdown.style.scss';
+import { useCallback } from 'react';
 
 const CartDropDown = () => {
   const cartItems = useSelector(selectCartItems);
   const navigate = useNavigate();
-  const goToCheckoutPage = () => navigate('/checkout');
+  const goToCheckoutPage = useCallback(() => navigate('/checkout'), [navigate]);
 
   return (
     <div className='cart-dropdown-container'>
